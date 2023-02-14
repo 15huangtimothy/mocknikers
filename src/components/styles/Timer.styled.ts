@@ -1,16 +1,12 @@
 import styled from 'styled-components';
 
 export const StyledTimer = styled.div`
-  flex: 0 0 auto;
-  min-height: 12vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   .base-timer {
     position: relative;
     height: 56px;
     width: 56px;
-    margin: ${({ theme }) => `${theme.gridPoints}px auto`};
+    margin: ${({ theme }) =>
+      `${theme.gridPoints}px auto ${theme.gridPoints * 2}px`};
   }
 
   .base-timer__circle {

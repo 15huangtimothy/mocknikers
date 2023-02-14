@@ -8,11 +8,12 @@ export const StyledPauseMenu = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: fill-available;
   background-color: rgba(0, 0, 0, 0.9);
   z-index: 10;
   color: ${({ theme }) => `${theme.colors.white}`};
-  padding: ${({ theme }) => `${theme.gridPoints * 6}px`};
+  padding: ${({ theme }) => `0 ${theme.gridPoints * 6}px`};
   h2 {
     margin-bottom: ${({ theme }) => `${theme.gridPoints * 6}px`};
   }

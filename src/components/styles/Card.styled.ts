@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const StyledCard = styled.div`
-  flex: 1 1 auto;
-  display: flex;
+  /* flex: 1 1 auto;
+  display: flex; */
   overflow-y: scroll;
-  flex-direction: column;
+  /* flex-direction: column; */
   position: relative;
 
   //Hiding scrollbar:
@@ -16,6 +16,7 @@ export const StyledCard = styled.div`
 
   &::after {
     content: '';
+    display: block;
     position: sticky;
     bottom: 0;
     width: 100%;

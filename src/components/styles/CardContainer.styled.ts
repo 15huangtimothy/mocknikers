@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const StyledCardContainer = styled.div`
   position: relative;
-  display: flex;
-  flex: 1 1 auto;
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: auto 1fr auto;
   padding: ${({ theme }) => `${theme.gridPoints * 3}px`};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};

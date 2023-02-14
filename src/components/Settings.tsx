@@ -73,7 +73,10 @@ const Settings = () => {
       {screen.startsWith('game') ? (
         <Game />
       ) : (
-        <StyledBackgroundContiner background={'blue'}>
+        <StyledBackgroundContiner
+          className="background--scroll"
+          background={'blue'}
+        >
           <StyledContainer>
             <Header title="New Game" />
             <StyledSettings>

@@ -2,8 +2,8 @@ import styled, { DefaultTheme } from 'styled-components';
 
 export const StyledBackgroundContiner = styled.div`
   color: ${({ theme }) => theme.colors.white};
-  min-height: 100vh;
-  min-height: fill-available;
+  height: 100vh;
+  height: fill-available;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -22,8 +22,13 @@ export const StyledBackgroundContiner = styled.div`
   &.background--titlePage {
     padding: ${({ theme }) => `0 ${theme.gridPoints * 6}px`};
   }
-  &.background--homePage {
+  &.background--centeredContent {
     align-items: center;
+  }
+  &.background--scroll {
+    min-height: 100vh;
+    min-height: fill-available;
+    height: unset;
   }
   h2::after {
     background-image: linear-gradient(

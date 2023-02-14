@@ -5,6 +5,7 @@ export const StyledSettings = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   padding: ${({ theme }) => `${theme.gridPoints * 3}px`};
   color: ${({ theme }) => theme.colors.black};
+  margin-bottom: ${({ theme }) => `${theme.gridPoints * 3}px`};
   label {
     margin-bottom: ${({ theme }) => `${theme.gridPoints * 2}px`};
     span {

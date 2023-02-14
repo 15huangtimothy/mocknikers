@@ -42,7 +42,7 @@ function App() {
       >
         {!wikiData ? (
           <StyledBackgroundContiner
-            className="background--titlePage"
+            className="background--centeredContent"
             background="blue"
           >
             <StyledLoadingImageContainer>
@@ -57,7 +57,7 @@ function App() {
             {screen === 'home' && (
               <>
                 <StyledBackgroundContiner
-                  className="background--homePage"
+                  className="background--centeredContent"
                   background="beige"
                 >
                   <Button
