@@ -10,6 +10,9 @@ export const StyledRoundRecap = styled.div`
     grid-template-columns: 1fr auto;
     margin-top: ${({ theme }) => `${theme.gridPoints * 4}px`};
   }
+  .score__score {
+    text-align: right;
+  }
   .score__team:not(:nth-last-child(2)),
   .score__score:not(:nth-last-child(1)) {
     border-bottom: 1px solid ${({ theme }) => theme.colors.white};
