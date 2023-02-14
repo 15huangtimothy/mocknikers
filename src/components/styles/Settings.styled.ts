@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const StyledSettings = styled.div`
   text-align: center;
+  background-color: ${({ theme }) => theme.colors.white};
+  padding: ${({ theme }) => `${theme.gridPoints * 3}px`};
+  color: ${({ theme }) => theme.colors.black};
   label {
     margin-bottom: ${({ theme }) => `${theme.gridPoints * 2}px`};
     span {

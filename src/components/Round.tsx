@@ -4,6 +4,7 @@ import { useConextIfPopulated } from '../lib/hooks';
 import GameContext from '../contexts/gameContext';
 import { StyledBackgroundContiner } from './styles/BackgroundContiner.styled';
 import Face from './Face';
+import { StyledInterstitialContainer } from './styles/Container-Interstitial.styled';
 
 type Proptypes = {
   round: number;
@@ -49,17 +50,21 @@ const Round = ({
       className="background--titlePage"
       background={color}
     >
-      <h2 className="all-caps">Round {round}</h2>
-      <Face round={round} color={color} />
-      <h3>{roundTitle}</h3>
-      <p>{roundDescription}</p>
-      <Button
-        className="button__bottom-aligned"
-        color={color}
-        handleClick={startRound}
-      >
-        Next
-      </Button>
+      <StyledInterstitialContainer>
+        <div>
+          <h2 className="all-caps">Round {round}</h2>
+          <Face round={round} color={color} />
+          <h3>{roundTitle}</h3>
+          <p>{roundDescription}</p>
+        </div>
+        <Button
+          className="button__bottom-aligned"
+          color={color}
+          handleClick={startRound}
+        >
+          Next
+        </Button>
+      </StyledInterstitialContainer>
     </StyledBackgroundContiner>
   );
 };

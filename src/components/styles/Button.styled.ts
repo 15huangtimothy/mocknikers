@@ -19,12 +19,10 @@ export const StyledButton = styled.button<{
     background: ${({ color, theme }) => theme.colors[`${color}1`]};
   }
   &.button__bottom-aligned {
-    position: absolute;
-    bottom: 0;
     width: 150px;
     height: 128px;
-    left: calc(50vw - 75px);
     border-radius: 100% 100% 0 0;
+    margin: ${({ theme }) => `${theme.gridPoints * 6}px auto 0`};
     padding: ${({ theme }) =>
       `${theme.gridPoints * 7}px ${theme.gridPoints * 2}px ${
         theme.gridPoints * 4
@@ -68,7 +66,7 @@ export const StyledButton = styled.button<{
     padding: 5px;
     position: absolute;
     left: 0;
-    top: -8px;
+    top: 16px;
     display: flex;
     justify-content: center;
     align-items: center;

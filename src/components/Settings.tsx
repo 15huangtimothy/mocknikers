@@ -74,8 +74,8 @@ const Settings = () => {
         <Game />
       ) : (
         <StyledBackgroundContiner background={'blue'}>
-          <Header title="New Game" />
           <StyledContainer>
+            <Header title="New Game" />
             <StyledSettings>
               <h3 className="heading">Settings</h3>
               <form>

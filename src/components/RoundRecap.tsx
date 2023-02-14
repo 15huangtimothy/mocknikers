@@ -7,6 +7,7 @@ import GameContext from '../contexts/gameContext';
 import { StyledRoundRecap } from './styles/RoundRecap.styled';
 import { StyledBackgroundContiner } from './styles/BackgroundContiner.styled';
 import Face from './Face';
+import { StyledInterstitialContainer } from './styles/Container-Interstitial.styled';
 
 type Proptypes = {
   teams: Teams;
@@ -61,41 +62,43 @@ const RoundRecap = ({ teams, round, setRound, setTeams, color }: Proptypes) => {
       className="background--titlePage"
       background={color}
     >
-      <StyledRoundRecap
-        color={color}
-        className={round === 3 ? 'score--awards-page' : ''}
-      >
-        {round < 3 ? (
-          <h2 className="all-caps">
-            Round {round}
-            <br />
-            Scoreboard
-          </h2>
-        ) : (
-          <>
-            <Face round={round + 1} color={color} />
-            <h2 className="all-caps">Congratulations</h2>
-          </>
-        )}
-        {round === 3 && <h3>{getWinningMessage(sortedTeams)}</h3>}
-        <div className="score__container">
-          {/* {sortedTeams.map((team, index) => (
-            <div key={index}>
-              <div className="score__team">{team.team}</div>
-              <div className="score__score">{team.score}</div>
-            </div>
-          ))} */}
-          {sortedTeams.map((team, index) =>
-            Object.keys(team).map((property) => (
-              <div
-                key={`${index}__${property}`}
-                className={`score__${property}`}
-              >
-                {team[property as keyof Team]}
-              </div>
-            ))
+      <StyledInterstitialContainer>
+        <StyledRoundRecap
+          color={color}
+          className={round === 3 ? 'score--awards-page' : ''}
+        >
+          {round < 3 ? (
+            <h2 className="all-caps">
+              Round {round}
+              <br />
+              Scoreboard
+            </h2>
+          ) : (
+            <>
+              <Face round={round + 1} color={color} />
+              <h2 className="all-caps">Congratulations</h2>
+            </>
           )}
-        </div>
+          {round === 3 && <h3>{getWinningMessage(sortedTeams)}</h3>}
+          <div className="score__container">
+            {/* {sortedTeams.map((team, index) => (
+              <div key={index}>
+                <div className="score__team">{team.team}</div>
+                <div className="score__score">{team.score}</div>
+              </div>
+            ))} */}
+            {sortedTeams.map((team, index) =>
+              Object.keys(team).map((property) => (
+                <div
+                  key={`${index}__${property}`}
+                  className={`score__${property}`}
+                >
+                  {team[property as keyof Team]}
+                </div>
+              ))
+            )}
+          </div>
+        </StyledRoundRecap>
         <Button
           className="button__bottom-aligned"
           handleClick={continueScreen}
@@ -103,7 +106,7 @@ const RoundRecap = ({ teams, round, setRound, setTeams, color }: Proptypes) => {
         >
           {round < 3 ? 'Continue' : 'End Game'}
         </Button>
-      </StyledRoundRecap>
+      </StyledInterstitialContainer>
     </StyledBackgroundContiner>
   );
 };

@@ -21,10 +21,16 @@ const GlobalStyles = createGlobalStyle`
   }
   html {
     font-size: 16px;
+    height: fill-available;
   }
   body {
     color: ${({ theme }) => theme.colors.black};
     font-family: ${({ theme }) => theme.font};
+    height: fill-available;
+  }
+
+  #root {
+    height: fill-available;
   }
 
   /*TYPEOGRAPHY*/

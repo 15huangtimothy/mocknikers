@@ -87,7 +87,7 @@ const Game = () => {
   };
 
   return (
-    <div>
+    <>
       {cards ? (
         <>
           {screen === 'game' && (
@@ -100,26 +100,26 @@ const Game = () => {
                 />
               )}
               <StyledBackgroundContiner background={`${color}`}>
-                <Header title={`Round ${round}`}>
-                  <Button
-                    className="button__pause"
-                    handleClick={pauseGame}
-                    color={`${color}`}
-                  >
-                    <svg
-                      width="12"
-                      height="13"
-                      viewBox="0 0 14 15"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-label="Pause"
-                    >
-                      <rect x="1" y="0" width="3" height="15" fill="white" />
-                      <rect x="9" y="0" width="3" height="15" fill="white" />
-                    </svg>
-                  </Button>
-                </Header>
                 <StyledContainer>
+                  <Header title={`Round ${round}`}>
+                    <Button
+                      className="button__pause"
+                      handleClick={pauseGame}
+                      color={`${color}`}
+                    >
+                      <svg
+                        width="12"
+                        height="13"
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Pause"
+                      >
+                        <rect x="1" y="0" width="3" height="15" fill="white" />
+                        <rect x="9" y="0" width="3" height="15" fill="white" />
+                      </svg>
+                    </Button>
+                  </Header>
                   <StyledCardContainer>
                     <Timer
                       paused={paused}
@@ -192,7 +192,7 @@ const Game = () => {
       ) : (
         'loading...'
       )}
-    </div>
+    </>
   );
 };
 
