@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+<img src="https://img.shields.io/badge/node-v16.19.0-bgrightreen.svg?style=flat-square" alt="node" /> <img src="https://img.shields.io/badge/npm-v8.19.3-red.svg?style=flat-square" alt="npm" />
+<a href="https://www.netlify.com" target="_blank">
+<img src="https://img.shields.io/badge/Powered_by-Netlify-teal?style=flat-square" alt="Powered by Netlify">
+</a>
+ 
+<br />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
 
-## Available Scripts
+<a href="https://monikers.netlify.app" target="_blank"><img src="https://monikers.netlify.app/android-chrome-512x512.png" alt="Monikers" height="40" width="40" /></a>
 
-In the project directory, you can run:
+# Monikers
+<a href="https://www.cmyk.games/products/monikers" target="_blank">Monikers</a> is a card game in which you guess an item lised on the card from a verbal  description or from gestures.  This is a digital adaptation of the physical card game.
 
-### `npm start`
+### Gameplay
+Players split into any number of teams of at least 2 poeple. Players will take turns describing the word(s) on the screen while their teammates guess the word. Once a teammate guesses the word, you proceed to the next word. Once the time runs out, the device is passed to the next team for a chance to guess. The round is complete once all the words have been guessed. The game is comprised of 3 rounds:
+- Round 1: Use any words, sounds, or gestures.
+- Round 2: Use only 1 word as a clue.
+- Round 3: No words, just charades.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The team that guess the most cards after thhe 3 rounds wins thhe game.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+*Visit <a href="https://boardgamegeek.com/boardgame/156546/monikers" target="_blank">Board Game Geek</a> to read more about rules, watch videos, and learn general information about the game.*
 
-### `npm test`
+### Alterations of the Physical Game
+Cards are slightly different than in the physical game:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Cards change from day to day. The previous day's top 1,000 most viewed topics on Wikipedia will be randomly pulled for a chance to use in the game.  This achieves 2 things. One, an automated way to generate cards. And, two, keeps the cards relevant to current times.
+2. There are no points assigned to cards. Every card is worth 1 point.
+3. There is a setting to write your own cards instead of generating them from Wikipedia.
 
-### `npm run build`
+## Getting Started
+This site is built on <a href="https://react.dev" target="_blank">React</a>. To install and run the app locally, in a terminal window run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+    git clone https://github.com/brysonchiu/monikers.git
+    nvm install
+    npm install
+    npm start
