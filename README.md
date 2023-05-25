@@ -7,7 +7,7 @@
 
 <br />
 
-<a href="https://monikers.netlify.app" target="_blank"><img src="https://monikers.netlify.app/android-chrome-512x512.png" alt="Monikers" height="40" width="40" /></a>
+<a href="https://monikers.app" target="_blank"><img src="https://monikers.app/android-chrome-512x512.png" alt="Monikers" height="40" width="40" /> www.monikers.app</a>
 
 # Monikers
 <a href="https://www.cmyk.games/products/monikers" target="_blank">Monikers</a> is a card game in which you guess an item lised on the card from a verbal  description or from gestures.  This is a digital adaptation of the physical card game.
