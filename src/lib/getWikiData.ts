@@ -6,8 +6,7 @@ const fetchPageViewData = async () => {
   //get previous day's date
   const date = new Date();
   date.setDate(date.getDate() - 1);
-  const month =
-    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth()}`;
+  const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth()}`;
   const day = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
   const dateString = `${date.getFullYear()}/${month}/${day}`;
 
@@ -22,9 +21,7 @@ const cleanPageViewData = (data: PageviewData | undefined) => {
   if (data) {
     let twentyArticleTitles = '';
     for (let i = 0; i < 1000; i++) {
-      twentyArticleTitles =
-        twentyArticleTitles +
-        encodeURIComponent(data.items[0].articles[i].article);
+      twentyArticleTitles = twentyArticleTitles + encodeURIComponent(data.items[0].articles[i].article);
       if (i % 20 !== 19) {
         twentyArticleTitles = twentyArticleTitles + '|';
       }
@@ -64,9 +61,7 @@ const fetchWikiArticleData = async (chunckedData: string) => {
 
 export const getWikiArticles = async () => {
   const chunckedPageViewData = await fetchPageViewData();
-  const articleDataArray: ArticleData[] = await Promise.all(
-    chunckedPageViewData.map((chunk) => fetchWikiArticleData(chunk))
-  );
+  const articleDataArray: ArticleData[] = await Promise.all(chunckedPageViewData.map((chunk) => fetchWikiArticleData(chunk)));
 
   const articles: Article[] = [];
   articleDataArray.forEach((articleData) => {
@@ -80,19 +75,9 @@ export const getWikiArticles = async () => {
 const cleanupWikiArticles = (articles: Article[]) => {
   const cleanedArticles = articles.filter((article) => {
     if (article.ns !== 0) return false;
-    if (
-      article.title.toLowerCase().startsWith('list of') ||
-      article.terms?.description?.join().toLowerCase().startsWith('list of')
-    )
-      return false;
+    if (article.title.toLowerCase().startsWith('list of') || article.terms?.description?.join().toLowerCase().startsWith('list of')) return false;
     if (article.title.toLowerCase() === 'main page') return false;
-    if (
-      article.terms?.description
-        ?.join(' ')
-        .toLowerCase()
-        .includes('disambiguation page')
-    )
-      return false;
+    if (article.terms?.description?.join(' ').toLowerCase().includes('disambiguation page')) return false;
     return true;
   });
   return cleanedArticles;

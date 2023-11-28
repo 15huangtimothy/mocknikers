@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
-export const StyledLoadingImageContainer = styled.div`
+export const StyledLoadingContainer = styled.div`
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   svg {
+    display: block;
     width: 100%;
     max-width: 50px;
+    margin-bottom: 1rem;
     .pupil {
       animation: eyeroll 4s ease-in-out infinite;
     }

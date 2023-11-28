@@ -11,8 +11,7 @@ import GlobalStyles from './styles/global';
 import { StyledBackgroundContiner } from './components/styles/BackgroundContiner.styled';
 import { StyledBackgroundImage } from './components/styles/BackgroundImage.styled';
 import { ReactComponent as BackgroudImage } from './images/monikers_characters.svg';
-import { ReactComponent as LoadingImage } from './images/loading.svg';
-import { StyledLoadingImageContainer } from './components/styles/LoadingImageContainer.styled';
+import Loading from './components/Loading';
 
 function App() {
   const [wikiData, setWikiData] = useState<Article[] | null>(null);
@@ -41,30 +40,14 @@ function App() {
         }}
       >
         {!wikiData ? (
-          <StyledBackgroundContiner
-            className="background--centeredContent"
-            background="blue"
-          >
-            <StyledLoadingImageContainer>
-              <LoadingImage />
-            </StyledLoadingImageContainer>
-          </StyledBackgroundContiner>
+          <Loading />
         ) : (
           <>
-            {(screen === 'settings' || screen.startsWith('game')) && (
-              <Settings />
-            )}
+            {(screen === 'settings' || screen.startsWith('game')) && <Settings />}
             {screen === 'home' && (
               <>
-                <StyledBackgroundContiner
-                  className="background--centeredContent"
-                  background="beige"
-                >
-                  <Button
-                    className="button__centered-circle"
-                    handleClick={newGame}
-                    color="blue"
-                  >
+                <StyledBackgroundContiner className="background--centeredContent" background="beige">
+                  <Button className="button__centered-circle" handleClick={newGame} color="blue">
                     <h1>Monikers</h1>
                     New Game
                   </Button>
