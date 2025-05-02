@@ -1,7 +1,5 @@
 <img src="https://img.shields.io/badge/node-v16.19.0-bgrightreen.svg?style=flat-square" alt="node" /> <img src="https://img.shields.io/badge/npm-v8.19.3-red.svg?style=flat-square" alt="npm" />
-<a href="https://www.netlify.com" target="_blank">
-<img src="https://img.shields.io/badge/Powered_by-Netlify-teal?style=flat-square" alt="Powered by Netlify">
-</a>
+[![Netlify Status](https://api.netlify.com/api/v1/badges/230945f9-9e67-435b-b2ad-1dd018a85fa7/deploy-status)](https://app.netlify.com/sites/mocknikers/deploys)
 
 <br />
 
