@@ -9,7 +9,7 @@ const Header = ({ title, children }: Proptypes) => {
   return (
     <StyledHeader>
       {children}
-      <h1>Monikers</h1>
+      <h1>Mocknikers</h1>
       <h2 className="all-caps">{title}</h2>
     </StyledHeader>
   );

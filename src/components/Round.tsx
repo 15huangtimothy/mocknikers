@@ -5,6 +5,7 @@ import GameContext from '../contexts/gameContext';
 import { StyledBackgroundContiner } from './styles/BackgroundContiner.styled';
 import Face from './Face';
 import { StyledInterstitialContainer } from './styles/Container-Interstitial.styled';
+import ReactGA from 'react-ga4';
 
 type Proptypes = {
   round: number;
@@ -14,25 +15,17 @@ type Proptypes = {
   color: string;
 };
 
-const Round = ({
-  round,
-  cards,
-  setRemainingCards,
-  setRemainingTime,
-  color,
-}: Proptypes) => {
+const Round = ({ round, cards, setRemainingCards, setRemainingTime, color }: Proptypes) => {
   const { setScreen }: GameContext = useConextIfPopulated(GameContext);
 
   let roundTitle: string;
   let roundDescription: string;
   if (round === 1) {
     roundTitle = 'Use any words, sounds, or gestures.';
-    roundDescription =
-      "You can't use the name itself. If you use any part of the name, you have to skip that word. Reading the clue text is allowed.";
+    roundDescription = "You can't use the name itself. If you use any part of the name, you have to skip that word. Reading the clue text is allowed.";
   } else if (round === 2) {
     roundTitle = 'Use only 1 word as a clue.';
-    roundDescription =
-      'It can be anything except the name itself. You can repeat that word as much as you like, but no sounds or gestures.';
+    roundDescription = 'It can be anything except the name itself. You can repeat that word as much as you like, but no sounds or gestures.';
   } else if (round === 3) {
     roundTitle = 'Just charades.';
     roundDescription = 'No words. Sound effects are OK (within reason).';
@@ -41,15 +34,15 @@ const Round = ({
   }
 
   function startRound(e: React.MouseEvent<HTMLButtonElement>) {
+    ReactGA.event('level_start', {
+      level_name: `round ${round}`,
+    });
     e.preventDefault();
     setRemainingCards(shuffleCards(cards));
     setScreen('game|switch-player');
   }
   return (
-    <StyledBackgroundContiner
-      className="background--titlePage"
-      background={color}
-    >
+    <StyledBackgroundContiner className="background--titlePage" background={color}>
       <StyledInterstitialContainer>
         <div>
           <h2 className="all-caps">Round {round}</h2>
@@ -57,11 +50,7 @@ const Round = ({
           <h3>{roundTitle}</h3>
           <p>{roundDescription}</p>
         </div>
-        <Button
-          className="button__bottom-aligned"
-          color={color}
-          handleClick={startRound}
-        >
+        <Button className="button__bottom-aligned" color={color} handleClick={startRound}>
           Next
         </Button>
       </StyledInterstitialContainer>

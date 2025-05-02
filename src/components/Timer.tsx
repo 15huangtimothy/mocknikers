@@ -3,33 +3,23 @@ import GameContext from '../contexts/gameContext';
 import { skipCard, nextTeam } from '../lib/helpers';
 import { useConextIfPopulated } from '../lib/hooks';
 import { StyledTimer } from './styles/Timer.styled';
+import ReactGA from 'react-ga4';
 
 type Proptypes = {
   paused: boolean;
   remainingTime: number;
   setRemainingTime: React.Dispatch<React.SetStateAction<number>>;
   teams: { team: string; score: number }[];
-  setTeams: React.Dispatch<
-    React.SetStateAction<{ team: string; score: number }[]>
-  >;
+  setTeams: React.Dispatch<React.SetStateAction<{ team: string; score: number }[]>>;
   color: string;
   remainingCards: Cards;
   setRemainingCards: React.Dispatch<React.SetStateAction<Cards>>;
+  round: number;
 };
 
-const Timer = ({
-  paused,
-  remainingTime,
-  setRemainingTime,
-  teams,
-  setTeams,
-  remainingCards,
-  setRemainingCards,
-  color,
-}: Proptypes) => {
-  const { settings, setScreen }: GameContext =
-    useConextIfPopulated(GameContext);
-  const timerId = useRef<null | NodeJS.Timer>(null);
+const Timer = ({ paused, remainingTime, setRemainingTime, teams, setTeams, remainingCards, setRemainingCards, color, round }: Proptypes) => {
+  const { settings, setScreen }: GameContext = useConextIfPopulated(GameContext);
+  const timerId = useRef<null | NodeJS.Timeout>(null);
 
   const timerLogic = useCallback(() => {
     setRemainingTime((remainingTime: number) => remainingTime - 1);
@@ -40,7 +30,7 @@ const Timer = ({
   }, [timerLogic]);
 
   const stopTimer = () => {
-    clearInterval(timerId.current as NodeJS.Timer);
+    clearInterval(timerId.current as NodeJS.Timeout);
     timerId.current = null;
   };
 
@@ -62,9 +52,7 @@ const Timer = ({
 
   const setDashArray = useCallback((): string => {
     const circumfrance = 2 * 3.14 * 45;
-    const timeFraction =
-      remainingTime / settings.timer -
-      (1 / settings.timer) * (1 - remainingTime / settings.timer);
+    const timeFraction = remainingTime / settings.timer - (1 / settings.timer) * (1 - remainingTime / settings.timer);
     const dashArrayValue = (timeFraction * circumfrance).toFixed(0);
     return `${dashArrayValue} ${circumfrance}`;
   }, [remainingTime, settings.timer]);
@@ -72,20 +60,15 @@ const Timer = ({
   useEffect(() => {
     localStorage.setItem('remainingTime', JSON.stringify(remainingTime));
     if (remainingTime === 0) {
+      ReactGA.event('turn_end', {
+        level_name: `round ${round}`,
+      });
       skipCard(remainingCards, setRemainingCards);
       resetTimer();
       setTeams(nextTeam(teams));
       setScreen('game|switch-player');
     }
-  }, [
-    remainingCards,
-    remainingTime,
-    resetTimer,
-    setRemainingCards,
-    setScreen,
-    setTeams,
-    teams,
-  ]);
+  }, [remainingCards, remainingTime, resetTimer, setRemainingCards, setScreen, setTeams, teams]);
 
   useEffect(() => {
     if (paused) {
@@ -93,24 +76,15 @@ const Timer = ({
     } else {
       startTimer();
     }
-    return () => clearInterval(timerId.current as NodeJS.Timer);
+    return () => clearInterval(timerId.current as NodeJS.Timeout);
   }, [paused, startTimer]);
 
   return (
     <StyledTimer color={color}>
       <div className="base-timer">
-        <svg
-          className="base-timer__svg"
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg className="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g className="base-timer__circle">
-            <circle
-              className="base-timer__path-elapsed"
-              cx="50"
-              cy="50"
-              r="45"
-            ></circle>
+            <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
             <path
               id="base-timer-path-remaining"
               strokeDasharray={setDashArray()}

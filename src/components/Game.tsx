@@ -7,37 +7,24 @@ import Round from './Round';
 import PauseMenu from './PauseMenu';
 import Timer from './Timer';
 import Button from './Button';
-import {
-  chooseColor,
-  getStateFromLocalStorgage,
-  nextCard,
-  skipCard,
-} from '../lib/helpers';
+import { chooseColor, getStateFromLocalStorgage, nextCard, skipCard } from '../lib/helpers';
 import SwitchPlayer from './SwitchPlayer';
 import RoundRecap from './RoundRecap';
 import { StyledBackgroundContiner } from './styles/BackgroundContiner.styled';
 import { StyledContainer } from './styles/Container.styled';
 import Header from './Header';
 import { StyledCardContainer } from './styles/CardContainer.styled';
+import ReactGA from 'react-ga4';
 
 const Game = () => {
-  const { settings, screen, setScreen, wikiData }: GameContext =
-    useConextIfPopulated(GameContext);
+  const { settings, screen, setScreen, wikiData }: GameContext = useConextIfPopulated(GameContext);
   const [round, setRound] = useLocalStorage(1, 'round');
   const [cards, setCards] = useLocalStorage(null, 'cards');
   const [teams, setTeams] = useLocalStorage(null, 'teams');
-  const [remainingCards, setRemainingCards] = useLocalStorage(
-    null,
-    'remainingCards'
-  );
+  const [remainingCards, setRemainingCards] = useLocalStorage(null, 'remainingCards');
   const [paused, setPaused] = useLocalStorage(false, 'paused');
-  const [firstPlayerInRound, setfirstPlayerInRound] = useLocalStorage(
-    true,
-    'firstPlayerInRound'
-  );
-  const [remainingTime, setRemainingTime] = useState<number>(
-    getStateFromLocalStorgage(settings.timer, 'remainingTime')
-  );
+  const [firstPlayerInRound, setfirstPlayerInRound] = useLocalStorage(true, 'firstPlayerInRound');
+  const [remainingTime, setRemainingTime] = useState<number>(getStateFromLocalStorgage(settings.timer, 'remainingTime'));
   const [color, setColor] = useState<string>('green');
 
   useEffect(() => {
@@ -74,6 +61,15 @@ const Game = () => {
     if (remainingCards.length > 1) {
       nextCard(remainingCards, setRemainingCards);
     } else {
+      ReactGA.event('turn_end', {
+        level_name: `round ${round}`,
+      });
+      ReactGA.event('level_end', {
+        level_name: `round ${round}`,
+      });
+      if (round === 3) {
+        ReactGA.event('game_complete');
+      }
       setRemainingCards(null);
       setRemainingTime(settings.timer);
       setfirstPlayerInRound(true);
@@ -82,6 +78,7 @@ const Game = () => {
   };
 
   const skip = (e: React.MouseEvent<HTMLButtonElement>) => {
+    ReactGA.event('skipped');
     e.preventDefault();
     skipCard(remainingCards, setRemainingCards);
   };
@@ -92,29 +89,12 @@ const Game = () => {
         <>
           {screen === 'game' && (
             <>
-              {paused && (
-                <PauseMenu
-                  paused={paused}
-                  setPaused={setPaused}
-                  color={color}
-                />
-              )}
+              {paused && <PauseMenu paused={paused} setPaused={setPaused} color={color} />}
               <StyledBackgroundContiner background={`${color}`}>
                 <StyledContainer>
                   <Header title={`Round ${round}`}>
-                    <Button
-                      className="button__pause"
-                      handleClick={pauseGame}
-                      color={`${color}`}
-                    >
-                      <svg
-                        width="12"
-                        height="13"
-                        viewBox="0 0 14 15"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-label="Pause"
-                      >
+                    <Button className="button__pause" handleClick={pauseGame} color={`${color}`}>
+                      <svg width="12" height="13" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Pause">
                         <rect x="1" y="0" width="3" height="15" fill="white" />
                         <rect x="9" y="0" width="3" height="15" fill="white" />
                       </svg>
@@ -130,6 +110,7 @@ const Game = () => {
                       color={color}
                       remainingCards={remainingCards}
                       setRemainingCards={setRemainingCards}
+                      round={round}
                     />
                     <Card card={remainingCards[0] as Card} />
                     <div className="button-container">
@@ -143,15 +124,7 @@ const Game = () => {
                           Skip
                         </Button>
                       )}
-                      <Button
-                        className={
-                          settings.allowSkips
-                            ? 'button__half button__half--right'
-                            : ''
-                        }
-                        handleClick={next}
-                        color={`${color}`}
-                      >
+                      <Button className={settings.allowSkips ? 'button__half button__half--right' : ''} handleClick={next} color={`${color}`}>
                         Next
                       </Button>
                     </div>
@@ -161,23 +134,9 @@ const Game = () => {
             </>
           )}
           {screen === 'game|round' && (
-            <Round
-              round={round}
-              setRemainingCards={setRemainingCards}
-              setRemainingTime={setRemainingTime}
-              cards={cards}
-              color={color}
-            />
+            <Round round={round} setRemainingCards={setRemainingCards} setRemainingTime={setRemainingTime} cards={cards} color={color} />
           )}
-          {screen === 'game|round-recap' && (
-            <RoundRecap
-              setRound={setRound}
-              teams={teams}
-              round={round}
-              setTeams={setTeams}
-              color={color}
-            />
-          )}
+          {screen === 'game|round-recap' && <RoundRecap setRound={setRound} teams={teams} round={round} setTeams={setTeams} color={color} />}
           {screen === 'game|switch-player' && (
             <SwitchPlayer
               firstPlayerInRound={firstPlayerInRound}

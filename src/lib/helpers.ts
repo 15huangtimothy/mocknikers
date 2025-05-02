@@ -7,9 +7,7 @@ export const stringToBoolean = (string: string): boolean => {
   } else if (string === 'false') {
     return false;
   } else {
-    throw Error(
-      "stringToBoolean function must take in only strings of 'true' or 'false'."
-    );
+    throw Error("stringToBoolean function must take in only strings of 'true' or 'false'.");
   }
 };
 
@@ -23,10 +21,7 @@ export const shuffleCards = (array: Cards): Cards => {
   return array;
 };
 
-export const getStateFromLocalStorgage = (
-  defaultValue: string | number | {} | [] | null,
-  key: string
-) => {
+export const getStateFromLocalStorgage = (defaultValue: string | number | {} | [] | null, key: string) => {
   const storage = localStorage.getItem(key);
   if (storage) return JSON.parse(storage);
   return defaultValue;
@@ -35,9 +30,7 @@ export const getStateFromLocalStorgage = (
 export const setASetting = (
   settings: Settings,
   setSettings: React.Dispatch<React.SetStateAction<Settings>>,
-  e:
-    | React.ChangeEvent<HTMLInputElement>
-    | React.ChangeEvent<HTMLTextAreaElement>
+  e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
 ) => {
   if (e.target.type === 'number') {
     setSettings({
@@ -55,10 +48,7 @@ export const setASetting = (
     } else {
       throw Error('Team input must have a index dataset.');
     }
-  } else if (
-    e.target.type === 'text' ||
-    e.target.tagName.toLowerCase() === 'textarea'
-  ) {
+  } else if (e.target.type === 'text' || e.target.tagName.toLowerCase() === 'textarea') {
     setSettings({
       ...settings,
       [e.target.name]: e.target.value,
@@ -78,17 +68,9 @@ export const setASetting = (
   }
 };
 
-export const checkNumber = (
-  settings: Settings,
-  setSettings: React.Dispatch<SetStateAction<Settings>>,
-  e: React.ChangeEvent<HTMLInputElement>
-) => {
-  const max = e.target.getAttribute('max')
-    ? parseInt(e.target.getAttribute('max') as string)
-    : null;
-  const min = e.target.getAttribute('min')
-    ? parseInt(e.target.getAttribute('min') as string)
-    : null;
+export const checkNumber = (settings: Settings, setSettings: React.Dispatch<SetStateAction<Settings>>, e: React.ChangeEvent<HTMLInputElement>) => {
+  const max = e.target.getAttribute('max') ? parseInt(e.target.getAttribute('max') as string) : null;
+  const min = e.target.getAttribute('min') ? parseInt(e.target.getAttribute('min') as string) : null;
 
   if (e.target.value === '') {
     setSettings({
@@ -96,13 +78,11 @@ export const checkNumber = (
       [e.target.name]: defaultSettings[e.target.name as keyof Settings],
     });
   } else if (max && parseInt(e.target.value) > max) {
-    console.log(max);
     setSettings({
       ...settings,
       [e.target.name]: max,
     });
   } else if (min && parseInt(e.target.value) < min) {
-    console.log(min);
     setSettings({
       ...settings,
       [e.target.name]: min,
@@ -118,15 +98,7 @@ export const nextTeam = (teams: Teams): Teams => {
 };
 
 export const resetLocalStorage = (): void => {
-  const keysToReset = [
-    'round',
-    'cards',
-    'remainingCards',
-    'paused',
-    'remainingTime',
-    'teams',
-    'firstPlayerInRound',
-  ];
+  const keysToReset = ['round', 'cards', 'remainingCards', 'paused', 'remainingTime', 'teams', 'firstPlayerInRound'];
   keysToReset.forEach((key) => localStorage.removeItem(key));
 };
 
@@ -140,19 +112,13 @@ export const chooseColor = (round: number): string => {
   }
 };
 
-export const nextCard = (
-  remainingCards: Cards,
-  setRemainingCards: React.Dispatch<React.SetStateAction<Cards>>
-): void => {
+export const nextCard = (remainingCards: Cards, setRemainingCards: React.Dispatch<React.SetStateAction<Cards>>): void => {
   const remainingCardsTemp = [...remainingCards];
   remainingCardsTemp.splice(0, 1);
   setRemainingCards(remainingCardsTemp);
 };
 
-export const skipCard = (
-  remainingCards: Cards,
-  setRemainingCards: React.Dispatch<React.SetStateAction<Cards>>
-) => {
+export const skipCard = (remainingCards: Cards, setRemainingCards: React.Dispatch<React.SetStateAction<Cards>>) => {
   const remainingCardsTemp = [...remainingCards];
   remainingCardsTemp.splice(0, 1);
   remainingCardsTemp.push(remainingCards[0]);

@@ -40,8 +40,10 @@ const GlobalStyles = createGlobalStyle`
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin:  ${({ theme }) =>
-      `${theme.gridPoints * 3}px 0 ${theme.gridPoints * 2}px 0`};
+    margin:  ${({ theme }) => `${theme.gridPoints * 2}px 0`};
+    @media (max-width: 350px) {
+      font-size: 1.5rem;
+    }
   }
   h2, h3, .heading {
     font-weight: 600;
@@ -84,13 +86,30 @@ const GlobalStyles = createGlobalStyle`
     text-align: center;
     /* margin-bottom:  ${({ theme }) => `${theme.gridPoints * 4}px`}; */
   }
+  .new-game {
+    font-weight: 400;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-top: .5rem;
+    font-size: 1rem;
+  }
+  .inspired-by {
+    font-size: .75rem;
+    font-weight: 300;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-top: .5rem;
+  }
 
   /*FORMS*/
   input, textarea {
     border: 1px solid ${({ theme }) => theme.colors.gray};
     font-size: 0.875rem;
-    padding: ${({ theme }) =>
-      `${1 * theme.gridPoints}px ${1.25 * theme.gridPoints}px`};
+    padding: ${({ theme }) => `${1 * theme.gridPoints}px ${1.25 * theme.gridPoints}px`};
     margin-bottom: ${({ theme }) => `${1.5 * theme.gridPoints}px`};
     &:focus-visible {
       outline: none;
@@ -103,8 +122,7 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     height: ${({ theme }) => `${theme.gridPoints * 5}px`};
     border-radius: ${({ theme }) => `${theme.gridPoints * 2.5}px`};
-    padding: ${({ theme }) =>
-      `${theme.gridPoints}px ${theme.gridPoints * 3}px`};
+    padding: ${({ theme }) => `${theme.gridPoints}px ${theme.gridPoints * 3}px`};
     cursor: pointer;
   }
   button:disabled {

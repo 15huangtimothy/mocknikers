@@ -9,12 +9,19 @@ import Header from './Header';
 import { StyledBackgroundContiner } from './styles/BackgroundContiner.styled';
 import { StyledContainer } from './styles/Container.styled';
 import { StyledSettings } from './styles/Settings.styled';
+import ReactGA from 'react-ga4';
 
 const Settings = () => {
-  const { screen, settings, setSettings, setScreen, wikiData }: GameContext =
-    useConextIfPopulated(GameContext);
+  const { screen, settings, setSettings, setScreen, wikiData }: GameContext = useConextIfPopulated(GameContext);
 
   function startGame(e: React.MouseEvent<HTMLButtonElement>) {
+    ReactGA.event('start_game', {
+      card_type: settings.cardType,
+      team_count: settings.teams.length,
+      timer: settings.timer,
+      allow_skips: settings.allowSkips,
+      generated_card_count: settings.cardType === 'generate' ? settings.cardCount : null,
+    });
     e.preventDefault();
     setScreen('game|round');
   }
@@ -73,10 +80,7 @@ const Settings = () => {
       {screen.startsWith('game') ? (
         <Game />
       ) : (
-        <StyledBackgroundContiner
-          className="background--scroll"
-          background={'blue'}
-        >
+        <StyledBackgroundContiner className="background--scroll" background={'blue'}>
           <StyledContainer>
             <Header title="New Game" />
             <StyledSettings>
@@ -105,13 +109,7 @@ const Settings = () => {
                     <Button handleClick={addTeam} width="50%" color="blue">
                       Add
                     </Button>
-                    <Button
-                      className="button--reverse"
-                      handleClick={removeTeam}
-                      width="50%"
-                      color="blue"
-                      disabled={settings.teams.length <= 2 ? true : false}
-                    >
+                    <Button className="button--reverse" handleClick={removeTeam} width="50%" color="blue" disabled={settings.teams.length <= 2 ? true : false}>
                       Remove
                     </Button>
                   </div>
@@ -153,12 +151,7 @@ const Settings = () => {
                 <div className="settings__group">
                   <label className="all-caps">Cards</label>
                   <div className="tabber">
-                    <label
-                      htmlFor="cardType__generate"
-                      className={
-                        settings.cardType === 'generate' ? 'label--checked' : ''
-                      }
-                    >
+                    <label htmlFor="cardType__generate" className={settings.cardType === 'generate' ? 'label--checked' : ''}>
                       Generated
                     </label>
                     <input
@@ -169,12 +162,7 @@ const Settings = () => {
                       checked={settings.cardType === 'generate'}
                       onChange={(e) => setASetting(settings, setSettings, e)}
                     />
-                    <label
-                      htmlFor="cardType__written"
-                      className={
-                        settings.cardType === 'written' ? 'label--checked' : ''
-                      }
-                    >
+                    <label htmlFor="cardType__written" className={settings.cardType === 'written' ? 'label--checked' : ''}>
                       Written
                     </label>
                     <input
@@ -222,10 +210,7 @@ const Settings = () => {
                               [e.target.name]: e.target.value.trim(),
                             })
                       }
-                      onFocus={(e) =>
-                        settings.cardText === defaultSettings.cardText &&
-                        setSettings({ ...settings, [e.target.name]: '' })
-                      }
+                      onFocus={(e) => settings.cardText === defaultSettings.cardText && setSettings({ ...settings, [e.target.name]: '' })}
                     />
                   )}
                 </div>
