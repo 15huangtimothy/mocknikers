@@ -7,7 +7,7 @@
 
 <br />
 
-<a href="https://www.mocknikers.com" target="_blank"><img src="https://www.mocknikers.app/android-chrome-512x512.png" alt="Mocknikers" height="40" width="40" /> www.mocknikers.app</a>
+<a href="https://www.mocknikers.com" target="_blank"><img src="https://www.mocknikers.com/android-chrome-512x512.png" alt="Mocknikers" height="40" width="40" /> www.mocknikers.com</a>
 
 # Mocknikers
 
