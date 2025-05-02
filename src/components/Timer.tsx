@@ -68,7 +68,7 @@ const Timer = ({ paused, remainingTime, setRemainingTime, teams, setTeams, remai
       setTeams(nextTeam(teams));
       setScreen('game|switch-player');
     }
-  }, [remainingCards, remainingTime, resetTimer, setRemainingCards, setScreen, setTeams, teams]);
+  }, [remainingCards, remainingTime, resetTimer, setRemainingCards, setScreen, setTeams, teams, round]);
 
   useEffect(() => {
     if (paused) {
