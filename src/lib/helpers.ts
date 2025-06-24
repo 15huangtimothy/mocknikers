@@ -30,7 +30,7 @@ export const getStateFromLocalStorgage = (defaultValue: string | number | {} | [
 export const setASetting = (
   settings: Settings,
   setSettings: React.Dispatch<React.SetStateAction<Settings>>,
-  e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLSelectElement>
 ) => {
   if (e.target.type === 'number') {
     setSettings({
@@ -48,7 +48,7 @@ export const setASetting = (
     } else {
       throw Error('Team input must have a index dataset.');
     }
-  } else if (e.target.type === 'text' || e.target.tagName.toLowerCase() === 'textarea') {
+  } else if (e.target.type === 'text' || e.target.tagName.toLowerCase() === 'textarea' || e.target.tagName.toLowerCase() === 'select') {
     setSettings({
       ...settings,
       [e.target.name]: e.target.value,

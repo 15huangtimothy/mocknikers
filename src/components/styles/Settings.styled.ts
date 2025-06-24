@@ -102,94 +102,15 @@ export const StyledSettings = styled.div`
     max-width: 100%;
     margin: 0 auto;
   }
-  .tabber {
+  select {
     width: 100%;
+    max-width: ${({ theme }) => `${theme.gridPoints * 18}px`};
     position: relative;
     display: flex;
-    border: 1px solid ${({ theme }) => theme.colors.gray};
-    margin-bottom: ${({ theme }) => `${theme.gridPoints * 3}px`};
-    border-radius: 20px;
-    height: 40px;
-
-    label {
-      text-align: center;
-      width: 50%;
-      user-select: none;
-      padding: ${({ theme }) => `${theme.gridPoints * 1}px`};
-      cursor: pointer;
-      margin: 0;
-      z-index: 2;
-      transition: color 500ms ease;
-      &.label--checked {
-        color: ${({ theme }) => theme.colors.white};
-      }
-    }
-
-    input[type='radio'] {
-      display: none;
-
-      // static
-      &#cardType__generate ~ .blob {
-        transform-origin: right center;
-      }
-
-      &#cardType__written ~ .blob {
-        transform-origin: left center;
-      }
-
-      // animated
-      &#cardType__generate:checked {
-        ~ .slider {
-          animation-name: stretchyRev;
-          border-radius: 20px 0 0 20px;
-        }
-      }
-
-      &#cardType__written:checked {
-        ~ .slider {
-          animation-name: stretchy;
-          border-radius: 0 20px 20px 0;
-        }
-      }
-    }
-
-    .slider {
-      background-color: ${({ theme }) => theme.colors.blue2};
-      border-radius: 20px;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      position: absolute;
-      animation-duration: 0.5s;
-      animation-direction: forwards;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards;
-      transition: transform 150ms ease, border-radius 500ms ease;
-    }
-  }
-
-  @keyframes stretchy {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  @keyframes stretchyRev {
-    0% {
-      transform: translateX(100%);
-    }
-    50% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(0);
-    }
+    text-align: center;
+    margin-bottom: ${({ theme }) => `${theme.gridPoints * 2}px`};
+    min-height: 40px;
+    padding: ${({ theme }) => `${theme.gridPoints * 1}px`};
+    cursor: pointer;
   }
 `;

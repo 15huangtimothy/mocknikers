@@ -56,7 +56,8 @@ const Game = () => {
   const next = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const tempTeams = [...teams];
-    tempTeams[0].score++;
+    const currentCard = remainingCards[0] as Card;
+    tempTeams[0].score += currentCard.points;
     setTeams(tempTeams);
     if (remainingCards.length > 1) {
       nextCard(remainingCards, setRemainingCards);

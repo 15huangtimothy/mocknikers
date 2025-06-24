@@ -149,33 +149,20 @@ const Settings = () => {
                   </div>
                 </div>
                 <div className="settings__group">
-                  <label className="all-caps">Cards</label>
-                  <div className="tabber">
-                    <label htmlFor="cardType__generate" className={settings.cardType === 'generate' ? 'label--checked' : ''}>
-                      Generated
-                    </label>
-                    <input
-                      id="cardType__generate"
+                  <div className="input__container--split">
+                    <label className="all-caps" htmlFor="cardType">Cards</label>
+                    <select
+                      id="cardType"
                       name="cardType"
-                      type="radio"
-                      value="generate"
-                      checked={settings.cardType === 'generate'}
+                      value={settings.cardType}
                       onChange={(e) => setASetting(settings, setSettings, e)}
-                    />
-                    <label htmlFor="cardType__written" className={settings.cardType === 'written' ? 'label--checked' : ''}>
-                      Written
-                    </label>
-                    <input
-                      id="cardType__written"
-                      name="cardType"
-                      type="radio"
-                      value="written"
-                      checked={settings.cardType === 'written'}
-                      onChange={(e) => setASetting(settings, setSettings, e)}
-                    />
-                    <div className="slider"></div>
+                    >
+                      <option value="base" selected>Base Game</option>
+                      <option value="generate">Generated</option>
+                      <option value="written">Written</option>
+                    </select>
                   </div>
-                  {settings.cardType === 'generate' && (
+                  {(settings.cardType === 'generate' || settings.cardType === 'base') && (
                     <div className="input__container--split">
                       <label className="all-caps" htmlFor="cardCount">
                         Card Count
@@ -202,13 +189,13 @@ const Settings = () => {
                       onBlur={(e) =>
                         !settings.cardText.trim()
                           ? setSettings({
-                              ...settings,
-                              [e.target.name]: defaultSettings.cardText,
-                            })
+                            ...settings,
+                            [e.target.name]: defaultSettings.cardText,
+                          })
                           : setSettings({
-                              ...settings,
-                              [e.target.name]: e.target.value.trim(),
-                            })
+                            ...settings,
+                            [e.target.name]: e.target.value.trim(),
+                          })
                       }
                       onFocus={(e) => settings.cardText === defaultSettings.cardText && setSettings({ ...settings, [e.target.name]: '' })}
                     />

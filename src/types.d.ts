@@ -1,6 +1,8 @@
 type Card = {
-  word: string;
+  title: string;
   description: string;
+  category: string;
+  points: number;
 };
 
 type Cards = Card[];
