@@ -22,6 +22,7 @@ export const StyledCard = styled.div`
   overflow-y: scroll;
   /* flex-direction: column; */
   position: relative;
+  min-height: 40vh;
 
   //Hiding scrollbar:
   -ms-overflow-style: none; //IE

@@ -15,6 +15,7 @@ import { StyledContainer } from './styles/Container.styled';
 import Header from './Header';
 import { StyledCardContainer } from './styles/CardContainer.styled';
 import ReactGA from 'react-ga4';
+import DraftingRound from './DraftingRound';
 
 const Game = () => {
   const { settings, screen, setScreen, wikiData }: GameContext = useConextIfPopulated(GameContext);
@@ -26,16 +27,20 @@ const Game = () => {
   const [firstPlayerInRound, setfirstPlayerInRound] = useLocalStorage(true, 'firstPlayerInRound');
   const [remainingTime, setRemainingTime] = useState<number>(getStateFromLocalStorgage(settings.timer, 'remainingTime'));
   const [color, setColor] = useState<string>('green');
+  const [draftedCards, setDraftedCards] = useLocalStorage(null, 'draftedCards');
 
   useEffect(() => {
     setColor(chooseColor(round));
   }, [round]);
 
   useEffect(() => {
-    if (!cards && wikiData) {
-      setCards(getCards(settings, wikiData));
+    // Only get cards if we're not in drafting mode or if we already have drafted cards
+    if (!cards && // No cards loaded yet
+      (settings.cardType !== 'generate' || wikiData) && // Only need wikiData for generated cards
+      (!settings.isDrafting || draftedCards)) {
+      setCards(settings.isDrafting ? draftedCards : getCards(settings, wikiData || []));
     }
-  }, [cards, setCards, settings, wikiData]);
+  }, [cards, setCards, settings, wikiData, draftedCards]);
 
   useEffect(() => {
     if (!teams) {
@@ -84,9 +89,15 @@ const Game = () => {
     skipCard(remainingCards, setRemainingCards);
   };
 
+  const handleDraftComplete = (selectedCards: Card[]) => {
+    setDraftedCards(selectedCards);
+    setCards(selectedCards);
+    setScreen('game|round');
+  };
+
   return (
     <>
-      {cards ? (
+      {(cards || screen === 'game|drafting') ? (
         <>
           {screen === 'game' && (
             <>
@@ -133,6 +144,9 @@ const Game = () => {
                 </StyledContainer>
               </StyledBackgroundContiner>
             </>
+          )}
+          {screen === 'game|drafting' && (
+            <DraftingRound onDraftComplete={handleDraftComplete} />
           )}
           {screen === 'game|round' && (
             <Round round={round} setRemainingCards={setRemainingCards} setRemainingTime={setRemainingTime} cards={cards} color={color} />

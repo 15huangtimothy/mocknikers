@@ -14,6 +14,8 @@ type Settings = {
   cardCount: number;
   cardType: string;
   cardText: string;
+  isDrafting: boolean;
+  playerCount: number;
 };
 
 type GameContext = {

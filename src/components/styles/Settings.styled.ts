@@ -18,7 +18,7 @@ export const StyledSettings = styled.div`
   .settings__group {
     display: flex;
     flex-direction: column;
-  }
+      }
   .settings__group:not(:last-of-type)::after {
     content: '';
     height: 2px;
@@ -112,5 +112,23 @@ export const StyledSettings = styled.div`
     min-height: 40px;
     padding: ${({ theme }) => `${theme.gridPoints * 1}px`};
     cursor: pointer;
+  }
+  .settings__drafting {
+    padding-top: 1rem;
+    border-top: 1px dashed ${({ theme }) => theme.colors.gray};
+    position: relative;
+    .input__container--split {
+      margin-bottom: 3rem;
+    }
+    .error-message {
+      position: absolute;
+      bottom: -.25rem;
+      left: 0;
+      right: 0;
+      color: ${({ theme }) => theme.colors.red};
+      font-size: 0.875rem;
+      text-align: center;
+      color: red;
+    }
   }
 `;

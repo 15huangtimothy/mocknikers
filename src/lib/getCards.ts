@@ -1,4 +1,5 @@
 import baseCards from '../data/base_cards.json';
+import { shuffleCards } from './helpers';
 
 function getCards(settings: Settings, wikiData: Article[]): Cards {
   let cards: Cards = [];
@@ -17,22 +18,16 @@ function getCards(settings: Settings, wikiData: Article[]): Cards {
       };
     });
   } else if (settings.cardType === 'base') {
-    // Shuffle cards with Fisher-Yates
-    const shuffledCards = [...baseCards];
-    for (let i = shuffledCards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
-    }
-
+    // Transform baseCards to correct type before shuffling
+    const transformedCards: Cards = baseCards.map(card => ({
+      title: card.Title,
+      description: card.Description,
+      category: card.Category,
+      points: card.Points
+    }));
+    const shuffledCards = shuffleCards(transformedCards);
     const numCardsToSelect = Math.min(settings.cardCount, shuffledCards.length);
-    cards = shuffledCards.slice(0, numCardsToSelect).map((card) => {
-      return {
-        title: card.Title,
-        description: card.Description,
-        category: card.Category,
-        points: card.Points,
-      };
-    });
+    cards = shuffledCards.slice(0, numCardsToSelect);
   } else {
     if (settings.cardCount > wikiData.length) throw Error('Too many cards.');
     const arrayOfNumbers = Array.from(Array(wikiData.length).keys());

@@ -15,16 +15,24 @@ const Settings = () => {
   const { screen, settings, setSettings, setScreen, wikiData }: GameContext = useConextIfPopulated(GameContext);
 
   function startGame(e: React.MouseEvent<HTMLButtonElement>) {
+    if (!isDraftingValid()) {
+      e.preventDefault();
+      return;
+    }
+
     ReactGA.event('start_game', {
       card_type: settings.cardType,
       team_count: settings.teams.length,
       timer: settings.timer,
       allow_skips: settings.allowSkips,
       generated_card_count: settings.cardType === 'generate' ? settings.cardCount : null,
+      is_drafting: settings.isDrafting,
+      player_count: settings.playerCount,
     });
     e.preventDefault();
-    setScreen('game|round');
+    setScreen(settings.isDrafting ? 'game|drafting' : 'game|round');
   }
+
   function addTeam(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const tempTeams = [...settings.teams];
@@ -34,6 +42,7 @@ const Settings = () => {
       teams: tempTeams,
     });
   }
+
   function removeTeam(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     const tempTeams = [...settings.teams];
@@ -74,6 +83,11 @@ const Settings = () => {
     },
     [setSettings, settings]
   );
+
+  const isDraftingValid = () => {
+    if (!settings.isDrafting) return true;
+    return settings.cardCount % settings.playerCount === 0;
+  };
 
   return (
     <>
@@ -157,29 +171,11 @@ const Settings = () => {
                       value={settings.cardType}
                       onChange={(e) => setASetting(settings, setSettings, e)}
                     >
-                      <option value="base" selected>Base Game</option>
+                      <option value="base">Base Game</option>
                       <option value="generate">Generated</option>
                       <option value="written">Written</option>
                     </select>
                   </div>
-                  {(settings.cardType === 'generate' || settings.cardType === 'base') && (
-                    <div className="input__container--split">
-                      <label className="all-caps" htmlFor="cardCount">
-                        Card Count
-                      </label>
-                      <input
-                        id="cardCount"
-                        className="input--narrow"
-                        name="cardCount"
-                        type="number"
-                        min="1"
-                        max={wikiData?.length}
-                        value={settings.cardCount}
-                        onChange={(e) => setASetting(settings, setSettings, e)}
-                        onBlur={(e) => checkNumber(settings, setSettings, e)}
-                      />
-                    </div>
-                  )}
                   {settings.cardType === 'written' && (
                     <textarea
                       id="cardText"
@@ -200,8 +196,64 @@ const Settings = () => {
                       onFocus={(e) => settings.cardText === defaultSettings.cardText && setSettings({ ...settings, [e.target.name]: '' })}
                     />
                   )}
+                  {(settings.cardType === 'generate' || settings.cardType === 'base') && (
+                    <div className="settings__drafting">
+                      <div className="input__container--split">
+                        <label className="all-caps" htmlFor="cardCount">
+                          Card Count
+                        </label>
+                        <input
+                          id="cardCount"
+                          className="input--narrow"
+                          name="cardCount"
+                          type="number"
+                          min="1"
+                          max={wikiData?.length}
+                          value={settings.cardCount}
+                          onChange={(e) => setASetting(settings, setSettings, e)}
+                          onBlur={(e) => checkNumber(settings, setSettings, e)}
+                        />
+                      </div>
+                      <div className="input__container--split">
+                        <label className="all-caps" htmlFor="isDrafting">
+                          Enable Drafting?
+                        </label>
+                        <input
+                          id="isDrafting"
+                          name="isDrafting"
+                          type="checkbox"
+                          onChange={(e) => setASetting(settings, setSettings, e)}
+                          checked={settings.isDrafting}
+                        />
+                      </div>
+                      {settings.isDrafting && (
+                        <div className="input__container--split">
+                          <label className="all-caps" htmlFor="playerCount">
+                            Number of Players
+                          </label>
+                          <input
+                            id="playerCount"
+                            className="input--narrow"
+                            name="playerCount"
+                            type="number"
+                            min="2"
+                            max="12"
+                            value={settings.playerCount}
+                            onChange={(e) => setASetting(settings, setSettings, e)}
+                            onBlur={(e) => checkNumber(settings, setSettings, e)}
+                          />
+                        </div>
+                      )}
+                      {settings.isDrafting && !isDraftingValid() && (
+                        <div className="error-message">
+                          Card count must be divisible by number of players. Each player should contribute {Math.floor(settings.cardCount / settings.playerCount)} cards.
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <Button handleClick={startGame} color="blue" type="submit">
+
+                <Button handleClick={startGame} color="blue" type="submit" disabled={!isDraftingValid()}>
                   Start Game
                 </Button>
               </form>

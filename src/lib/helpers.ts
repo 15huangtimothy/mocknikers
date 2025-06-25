@@ -12,13 +12,12 @@ export const stringToBoolean = (string: string): boolean => {
 };
 
 export const shuffleCards = (array: Cards): Cards => {
-  for (let i = array.length - 1; i > 0; i--) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return array;
+  return shuffled;
 };
 
 export const getStateFromLocalStorgage = (defaultValue: string | number | {} | [] | null, key: string) => {
