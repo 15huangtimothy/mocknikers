@@ -20,10 +20,10 @@ function getCards(settings: Settings, wikiData: Article[]): Cards {
   } else if (settings.cardType === 'base') {
     // Transform baseCards to correct type before shuffling
     const transformedCards: Cards = baseCards.map(card => ({
-      title: card.Title,
-      description: card.Description,
-      category: card.Category,
-      points: card.Points
+      title: card.title,
+      description: card.description,
+      category: card.category,
+      points: card.points
     }));
     const shuffledCards = shuffleCards(transformedCards);
     const numCardsToSelect = Math.min(settings.cardCount, shuffledCards.length);
