@@ -20,6 +20,7 @@ export const StyledCard = styled.div`
   /* flex: 1 1 auto;
   display: flex; */
   overflow-y: scroll;
+  overflow-x: hidden;
   /* flex-direction: column; */
   position: relative;
   min-height: 40vh;
@@ -43,7 +44,16 @@ export const StyledCard = styled.div`
   }
 
   .description {
-    padding: 0 25%;
+    padding: 0 1rem;
+    word-wrap: break-word;
+
+    @media (min-width: 768px) {
+      padding: 0 15%;
+    }
+
+    @media (min-width: 1200px) {
+      padding: 0 25%;
+    }
   }
 
   .card-meta-divider {
