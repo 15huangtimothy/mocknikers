@@ -60,6 +60,7 @@ const Game = () => {
 
   const next = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (paused) return;
     const tempTeams = [...teams];
     const currentCard = remainingCards[0] as Card;
     tempTeams[0].score += currentCard.points;
@@ -84,8 +85,9 @@ const Game = () => {
   };
 
   const skip = (e: React.MouseEvent<HTMLButtonElement>) => {
-    ReactGA.event('skipped');
     e.preventDefault();
+    if (paused) return;
+    ReactGA.event('skipped');
     skipCard(remainingCards, setRemainingCards);
   };
 
@@ -131,12 +133,17 @@ const Game = () => {
                           className="button__half button__half--left button--reverse"
                           handleClick={skip}
                           color={`${color}`}
-                          disabled={remainingCards.length === 1}
+                          disabled={remainingCards.length === 1 || paused}
                         >
                           Skip
                         </Button>
                       )}
-                      <Button className={settings.allowSkips ? 'button__half button__half--right' : ''} handleClick={next} color={`${color}`}>
+                      <Button 
+                        className={settings.allowSkips ? 'button__half button__half--right' : ''} 
+                        handleClick={next} 
+                        color={`${color}`}
+                        disabled={paused}
+                      >
                         Next
                       </Button>
                     </div>
