@@ -6,7 +6,7 @@ export const defaultSettings = {
   cardType: 'base',
   cardText: 'Write your own cards. Only include 1 card per line.',
   isDrafting: false,
-  playerCount: 2,
+  playerCount: 4,
 };
 
 export const defaultScreen = 'home';

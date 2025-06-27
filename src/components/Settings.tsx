@@ -259,8 +259,8 @@ const Settings = () => {
                             className="input--narrow"
                             name="playerCount"
                             type="number"
-                            min="2"
-                            max="12"
+                            min="4"
+                            max="16"
                             value={settings.playerCount}
                             onChange={(e) => setASetting(settings, setSettings, e)}
                             onBlur={(e) => checkNumber(settings, setSettings, e)}
