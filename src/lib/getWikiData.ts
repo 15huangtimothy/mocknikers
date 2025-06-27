@@ -19,16 +19,21 @@ const fetchPageViewData = async () => {
 const cleanPageViewData = (data: PageviewData | undefined) => {
   let chunckedData = [];
   if (data) {
+    const articles = data.items[0].articles;
     let twentyArticleTitles = '';
-    for (let i = 0; i < 1000; i++) {
-      twentyArticleTitles = twentyArticleTitles + encodeURIComponent(data.items[0].articles[i].article);
-      if (i % 20 !== 19) {
+    for (let i = 0; i < articles.length; i++) {
+      twentyArticleTitles = twentyArticleTitles + encodeURIComponent(articles[i].article);
+      if (i % 20 !== 19 && i !== articles.length - 1) {
         twentyArticleTitles = twentyArticleTitles + '|';
       }
       if (i % 20 === 19) {
         chunckedData.push(twentyArticleTitles);
         twentyArticleTitles = '';
       }
+    }
+    // Push the last chunk if it's not empty and wasn't pushed in the loop
+    if (twentyArticleTitles !== '') {
+      chunckedData.push(twentyArticleTitles);
     }
   }
   return chunckedData;
