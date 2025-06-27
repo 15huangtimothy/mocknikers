@@ -24,6 +24,7 @@ type GameContext = {
   setSettings: Dispatch<SetStateAction<Settings>>;
   setScreen: Dispatch<SetStateAction<string>>;
   wikiData: null | Article[];
+  setWikiData: Dispatch<SetStateAction<Article[] | null>>;
 };
 
 type Team = {

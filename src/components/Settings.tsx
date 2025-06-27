@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import GameContext from '../contexts/gameContext';
 import { defaultSettings } from '../lib/defaultSettings';
 import { checkNumber, setASetting } from '../lib/helpers';
@@ -10,16 +10,14 @@ import { StyledBackgroundContiner } from './styles/BackgroundContiner.styled';
 import { StyledContainer } from './styles/Container.styled';
 import { StyledSettings } from './styles/Settings.styled';
 import ReactGA from 'react-ga4';
+import { getWikiArticles } from '../lib/getWikiData';
+import Loading from './Loading';
 
 const Settings = () => {
-  const { screen, settings, setSettings, setScreen, wikiData }: GameContext = useConextIfPopulated(GameContext);
+  const { screen, settings, setSettings, setScreen, wikiData, setWikiData }: GameContext = useConextIfPopulated(GameContext);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function startGame(e: React.MouseEvent<HTMLButtonElement>) {
-    if (!isDraftingValid()) {
-      e.preventDefault();
-      return;
-    }
-
+  const logGameStart = () => {
     ReactGA.event('start_game', {
       card_type: settings.cardType,
       team_count: settings.teams.length,
@@ -29,6 +27,29 @@ const Settings = () => {
       is_drafting: settings.isDrafting,
       player_count: settings.playerCount,
     });
+  };
+
+  async function startGame(e: React.MouseEvent<HTMLButtonElement>) {
+    if (!isDraftingValid()) {
+      e.preventDefault();
+      return;
+    }
+
+    if (settings.cardType === 'generate' && !wikiData) {
+      e.preventDefault();
+      setIsLoading(true);
+      try {
+        const data = await getWikiArticles();
+        setWikiData(data);
+        logGameStart();
+        setScreen(settings.isDrafting ? 'game|drafting' : 'game|round');
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
+    logGameStart();
     e.preventDefault();
     setScreen(settings.isDrafting ? 'game|drafting' : 'game|round');
   }
@@ -93,6 +114,8 @@ const Settings = () => {
     <>
       {screen.startsWith('game') ? (
         <Game />
+      ) : isLoading ? (
+        <Loading />
       ) : (
         <StyledBackgroundContiner className="background--scroll" background={'blue'}>
           <StyledContainer>
