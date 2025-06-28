@@ -10,7 +10,6 @@ import PauseMenu from './PauseMenu';
 import DraftCard from './DraftCard';
 import DraftingTransition from './DraftingTransition';
 import styled from 'styled-components';
-import ReactGA from 'react-ga4';
 
 const StyledDraftContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
