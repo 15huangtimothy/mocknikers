@@ -12,19 +12,14 @@ import { StyledBackgroundImage } from './components/styles/BackgroundImage.style
 import { ReactComponent as BackgroudImage } from './images/monikers_characters.svg';
 import ReactGA from 'react-ga4';
 
+// Mock ReactGA to do nothing
+ReactGA.initialize = () => {};
+ReactGA.event = () => {};
+
 function App() {
   const [wikiData, setWikiData] = useState<Article[] | null>(null);
   const [settings, setSettings] = useLocalStorage(defaultSettings, 'settings');
   const [screen, setScreen] = useLocalStorage(defaultScreen, 'screen');
-
-  ReactGA.initialize('G-994RRJ4LZV', {
-    gaOptions: {
-      debug_mode: window.location.hostname === 'mocknikers.com' ? false : true,
-    },
-    gtagOptions: {
-      debug_mode: window.location.hostname === 'mocknikers.com' ? false : true,
-    },
-  });
 
   function newGame(e: React.MouseEvent<HTMLButtonElement>) {
     ReactGA.event('initialize_game');
