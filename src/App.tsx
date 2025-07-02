@@ -1,5 +1,4 @@
-import { getWikiArticles } from './lib/getWikiData';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Button from './components/Button';
 import Settings from './components/Settings';
 import GameContext from './contexts/gameContext';
@@ -11,7 +10,6 @@ import GlobalStyles from './styles/global';
 import { StyledBackgroundContiner } from './components/styles/BackgroundContiner.styled';
 import { StyledBackgroundImage } from './components/styles/BackgroundImage.styled';
 import { ReactComponent as BackgroudImage } from './images/monikers_characters.svg';
-import Loading from './components/Loading';
 import ReactGA from 'react-ga4';
 
 function App() {
@@ -28,11 +26,6 @@ function App() {
     },
   });
 
-  useEffect(() => {
-    const wikiData = getWikiArticles();
-    wikiData.then((data) => setWikiData(data));
-  }, []);
-
   function newGame(e: React.MouseEvent<HTMLButtonElement>) {
     ReactGA.event('initialize_game');
     e.preventDefault();
@@ -48,27 +41,22 @@ function App() {
           setSettings,
           setScreen,
           wikiData,
+          setWikiData,
         }}
       >
-        {!wikiData ? (
-          <Loading />
-        ) : (
+        {(screen === 'settings' || screen.startsWith('game')) && <Settings />}
+        {screen === 'home' && (
           <>
-            {(screen === 'settings' || screen.startsWith('game')) && <Settings />}
-            {screen === 'home' && (
-              <>
-                <StyledBackgroundContiner className="background--centeredContent" background="beige">
-                  <Button className="button__centered-circle" handleClick={newGame} color="blue">
-                    <p className="new-game">New Game</p>
-                    <h1>Mocknikers</h1>
-                    <p className="inspired-by">Inspired by the Game Monikers</p>
-                  </Button>
-                </StyledBackgroundContiner>
-                <StyledBackgroundImage>
-                  <BackgroudImage className="background-image" />
-                </StyledBackgroundImage>
-              </>
-            )}
+            <StyledBackgroundContiner className="background--centeredContent" background="beige">
+              <Button className="button__centered-circle" handleClick={newGame} color="blue">
+                <p className="new-game">New Game</p>
+                <h1>Mocknikers</h1>
+                <p className="inspired-by">Inspired by the Game Monikers</p>
+              </Button>
+            </StyledBackgroundContiner>
+            <StyledBackgroundImage>
+              <BackgroudImage className="background-image" />
+            </StyledBackgroundImage>
           </>
         )}
       </GameContext.Provider>

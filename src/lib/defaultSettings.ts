@@ -3,8 +3,10 @@ export const defaultSettings = {
   timer: 60,
   allowSkips: true,
   cardCount: 40,
-  cardType: 'generate',
+  cardType: 'base',
   cardText: 'Write your own cards. Only include 1 card per line.',
+  isDrafting: false,
+  playerCount: 4,
 };
 
 export const defaultScreen = 'home';

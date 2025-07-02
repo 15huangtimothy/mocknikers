@@ -1,3 +1,6 @@
+import baseCards from '../data/base_cards.json';
+import { shuffleCards } from './helpers';
+
 function getCards(settings: Settings, wikiData: Article[]): Cards {
   let cards: Cards = [];
 
@@ -8,10 +11,23 @@ function getCards(settings: Settings, wikiData: Article[]): Cards {
       .filter((n) => n);
     cards = wordArray.map((word) => {
       return {
-        word: word,
+        title: word,
         description: '',
+        category: '',
+        points: 1, // Default points for written cards
       };
     });
+  } else if (settings.cardType === 'base') {
+    // Transform baseCards to correct type before shuffling
+    const transformedCards: Cards = baseCards.map(card => ({
+      title: card.title,
+      description: card.description,
+      category: card.category,
+      points: card.points
+    }));
+    const shuffledCards = shuffleCards(transformedCards);
+    const numCardsToSelect = Math.min(settings.cardCount, shuffledCards.length);
+    cards = shuffledCards.slice(0, numCardsToSelect);
   } else {
     if (settings.cardCount > wikiData.length) throw Error('Too many cards.');
     const arrayOfNumbers = Array.from(Array(wikiData.length).keys());
@@ -26,10 +42,12 @@ function getCards(settings: Settings, wikiData: Article[]): Cards {
     for (let i = 1; i <= settings.cardCount; i++) {
       const index = generateRandomIndex(arrayOfNumbers.length);
       cards.push({
-        word: wikiData[arrayOfNumbers[index]].title,
+        title: wikiData[arrayOfNumbers[index]].title,
         description: cleanupDescription(
           wikiData[arrayOfNumbers[index]].extract
         ),
+        category: '', // Default category
+        points: 1, // Default points
       });
       arrayOfNumbers.splice(index, 1);
     }

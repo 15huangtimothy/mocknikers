@@ -1,6 +1,8 @@
 type Card = {
-  word: string;
+  title: string;
   description: string;
+  category: string;
+  points: number;
 };
 
 type Cards = Card[];
@@ -12,6 +14,8 @@ type Settings = {
   cardCount: number;
   cardType: string;
   cardText: string;
+  isDrafting: boolean;
+  playerCount: number;
 };
 
 type GameContext = {
@@ -20,6 +24,7 @@ type GameContext = {
   setSettings: Dispatch<SetStateAction<Settings>>;
   setScreen: Dispatch<SetStateAction<string>>;
   wikiData: null | Article[];
+  setWikiData: Dispatch<SetStateAction<Article[] | null>>;
 };
 
 type Team = {
